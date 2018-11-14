@@ -1,30 +1,30 @@
-const path = require("path");
+const path = require('path');
 
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const WebpackMd5Hash = require("webpack-md5-hash");
+const WebpackMd5Hash = require('webpack-md5-hash');
 
-const webpack = require("webpack");
+const webpack = require('webpack');
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name].[hash].js"
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[hash].js',
   },
 
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: "/node_modules/",
+        exclude: '/node_modules/',
         use: {
-          loader: "babel-loader"
-        }
+          loader: 'babel-loader',
+        },
       },
 
       {
@@ -32,58 +32,58 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           {
-            loader: "css-loader"
+            loader: 'css-loader',
           },
           {
-            loader: "postcss-loader"
+            loader: 'postcss-loader',
           },
           {
-            loader: "sass-loader"
-          }
-        ]
+            loader: 'sass-loader',
+          },
+        ],
       },
       {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
-              name: "[name].[ext]",
-              outputPath: "images/"
-            }
-          }
-        ]
-      }
-    ]
+              name: '[name].[ext]',
+              outputPath: 'images/',
+            },
+          },
+        ],
+      },
+    ],
   },
 
   plugins: [
-    new CleanWebpackPlugin("dist", {
-      verbose: true
+    new CleanWebpackPlugin('dist', {
+      verbose: true,
     }),
 
     new MiniCssExtractPlugin({
-      filename: "style.[contenthash].css"
+      filename: 'style.[contenthash].css',
     }),
 
     new HtmlWebpackPlugin({
       inject: true,
       hash: true,
-      template: "./public/index.html",
-      filename: "index.html"
+      template: './public/index.html',
+      filename: 'index.html',
     }),
 
     new WebpackMd5Hash(),
 
     new webpack.HotModuleReplacementPlugin(),
 
-    new webpack.NamedModulesPlugin()
+    new webpack.NamedModulesPlugin(),
   ],
 
-  devtool: "inline-source-map",
+  devtool: 'inline-source-map',
 
   devServer: {
-    contentBase: "./dist",
-    hot: true
-  }
+    contentBase: './dist',
+    hot: true,
+  },
 };
